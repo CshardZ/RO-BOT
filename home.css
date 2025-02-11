@@ -35,11 +35,13 @@ main {
 
 /* ======================================================== */
 
+/* Styles For: Sidebar */
+
 #sidebar {
-    width: 250px;
+    width: 260px;
     text-wrap: nowrap;
     overflow: hidden;
-    transition: all 1s;
+    transition: all 700ms;
 }
 
 #sidebar.close {
@@ -52,6 +54,33 @@ main {
 
     #toggle-button {
         animation: toggle-button-animation 2s forwards;
+    }
+}
+
+@keyframes toggle-button-animation {
+    0% {
+        opacity: 0;
+    }
+
+    70% {
+        transform: none;
+        opacity: 0;
+    }
+
+    80% {
+        top: 4em;
+        left: 8em;
+        opacity: 1;
+        transform: scale(1.5);
+    }
+
+    100% {
+        position: absolute;
+        top: 4em;
+        left: 8em;
+        opacity: 1;  
+        transform: rotate(180deg);
+
     }
 }
 
@@ -123,14 +152,62 @@ nav ul li a {
     align-items: center;
     gap: 1.5em;
     border-radius: 0.5em;
-    margin-bottom: 1em;
+    margin-bottom: 0.85em;
 
     transition: all 200ms;
 }
 
 nav ul li a:hover {
-    color: #ffffff;
     background-color: #363636;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav ul li {
+    #nav-home svg {
+        fill: lightskyblue;
+    }
+    #nav-explore svg {
+        fill: lightgreen;
+    }
+    #nav-profile svg {
+        fill: lightsalmon;
+    }
+    #nav-settings svg {
+        fill: #f07df0;
+    }
+
+    #nav-home:hover {
+        color: lightskyblue;
+    }
+    #nav-explore:hover {
+        color: lightgreen;
+    }
+    #nav-profile:hover {
+        color: lightsalmon;
+    }
+    #nav-settings:hover {
+        color: #f07df0;
+    }
+}
+
+nav ul li.active {
+    #nav-home {
+        color: white;
+        background: linear-gradient(90deg, #2A2D3A, #1F222E);
+    }
+    #nav-explore {
+        color: white;
+        background: linear-gradient(90deg, #2a3a33, #1f2e27);
+    }
+    #nav-profile {
+        color: white;
+        background: linear-gradient(90deg, #3a372a, #2e2b1f);
+    }
+    #nav-settings {
+        color: white;
+        background: linear-gradient(90deg, #352a3a, #2a1f2e);
+    }
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* ======================================================== */

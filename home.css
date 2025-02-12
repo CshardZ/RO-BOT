@@ -57,6 +57,10 @@ main {
     }
 }
 
+/* #sidebar.close ~ #chatbox {
+    padding-left: 5em;
+} */
+
 @keyframes toggle-button-animation {
     0% {
         opacity: 0;
@@ -145,6 +149,7 @@ nav ul li {
 }
 
 nav ul li a {
+    font-size: large;
     color: #cfcfcf;
     text-decoration: none;
     padding: 0.5em 0.5em;
@@ -218,6 +223,84 @@ nav ul li.active {
     background-color: #212121;
     height: 100%;
     width: 100%;
-    padding: 1em;
+    padding-left: 2em;
     border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.4);
+}
+
+#conversation-container {
+    /* background-color: blue; */
+    height: 100%;
+    width: 100%;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#highlights {
+    height: 100%;
+    width: 600px;
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid #ffffff1a; /* Light, subtle border */
+    box-shadow:inset 5px 0px 10px rgba(0, 0, 0, 0.1); /* Soft glow effect */
+
+}
+
+#input-container {
+    background-color: grey;
+    width: 90%;
+    height: 120px;
+    padding: 1em;
+    margin-bottom: 2em;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5em;
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: 0px 0px 3px rgba(255, 255, 255, 0.4);
+}
+
+#input-container:focus-within {
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.4);
+}
+
+#input-container textarea {
+    height: 100%;
+    resize: none;
+    border: none;
+    border-radius: 10px;
+    padding: 0.1em;
+    flex-grow: 1;
+    opacity: 1;
+    color: #fff;
+    font: inherit;
+    background: none;
+}
+
+#input-container textarea:focus,
+#input-container textarea:active {
+    border: none;
+    outline: none;
+}
+
+
+#input-container button {
+    cursor: pointer;
+    padding: 0.85em;
+    border: none;
+    background: #fff;
+    border-radius: 20%;
+    svg {
+        fill: #000;
+        width: 25px;
+    }
+}
+
+#input-container button:active {  
+    transform: translate(0, 0.1em);
 }

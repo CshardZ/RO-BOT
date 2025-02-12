@@ -34,8 +34,7 @@ main {
 }
 
 /* ======================================================== */
-
-/* Styles For: Sidebar */
+/* CODEFOR: Sidebar */
 
 #sidebar {
     width: 260px;
@@ -56,10 +55,6 @@ main {
         animation: toggle-button-animation 2s forwards;
     }
 }
-
-/* #sidebar.close ~ #chatbox {
-    padding-left: 5em;
-} */
 
 @keyframes toggle-button-animation {
     0% {
@@ -216,6 +211,7 @@ nav ul li.active {
 }
 
 /* ======================================================== */
+/* CODEFOR: Chatbox */
 
 #chatbox {
     font-family: inherit;
@@ -232,23 +228,22 @@ nav ul li.active {
 }
 
 #conversation-container {
-    /* background-color: blue; */
     height: 100%;
-    width: 100%;
+    width: 72%;
     padding: 1em;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap: 2em;
 }
 
 #highlights {
     height: 100%;
-    width: 600px;
+    width: 28%;
     border-radius: 0 10px 10px 0;
-    border-left: 1px solid #ffffff1a; /* Light, subtle border */
-    box-shadow:inset 5px 0px 10px rgba(0, 0, 0, 0.1); /* Soft glow effect */
-
+    border-left: 1px solid #ffffff1a;
+    box-shadow:inset 5px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 #input-container {
@@ -288,7 +283,6 @@ nav ul li.active {
     outline: none;
 }
 
-
 #input-container button {
     cursor: pointer;
     padding: 0.85em;
@@ -303,4 +297,41 @@ nav ul li.active {
 
 #input-container button:active {  
     transform: translate(0, 0.1em);
+}
+
+/* ======================================================== */
+/* CODEFOR: Message Blocks */
+
+.message-block {
+    border-radius: 10px;
+    width: 90%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+hr {
+    height: 15px;
+    width: 2px;
+    background-color: gray;
+    transform: rotate(180deg);
+}
+
+.message-block #user-input {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 3px solid #ffffff30;
+    background-color: #121212;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.message-block #bot-output {
+    width: 100%;
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 10px;
 }

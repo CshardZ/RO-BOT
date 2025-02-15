@@ -20,20 +20,22 @@ function setActivePage(clickedElement) {
 
 // =============================================================================
 
+let answer;
 let userInputText;
 let textArea = document.getElementById('text-area');
+
 textArea.addEventListener('keydown', function(event) {
     if(event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
-
-        sendUserInput();
+        answer = askGeminiAI();
     }
 })
 
-function sendUserInput() {
+async function askGeminiAI() {
     userInputText = textArea.value;
     textArea.value = "";
     if (userInputText.trim()) {
+        let botOutputText = await fetchAnswerFromGemeni(userInputText);
         
         let messageBlock = document.createElement('div');
         messageBlock.classList.add('message-block');
@@ -41,16 +43,68 @@ function sendUserInput() {
         let userInput = document.createElement('p');
         userInput.id = 'user-input';
         userInput.textContent = userInputText;
+        let botOutput = document.createElement('p');
+        botOutput.id = 'bot-output';
+        botOutput.textContent = botOutputText;
 
         let hr = document.createElement('hr');
 
         messageBlock.appendChild(userInput);
         messageBlock.appendChild(hr);
+        messageBlock.appendChild(botOutput);
 
         let allMessages = document.getElementById('all-messages');
         allMessages.appendChild(messageBlock);
+
     }
 }
+
+// =============================================================================
+
+const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const apiKey = "AIzaSyBKKWU5QbwKLt9dYm_v8ArWRaz8WfbfiI4"; // Replace with your actual API key
+
+const headers = {
+    "Content-Type": "application/json"
+};
+
+async function fetchAnswerFromGemeni(query) {
+    let data = {
+        contents: [
+            {
+                parts: [
+                    { text: query }
+                ]
+            }
+        ]
+    };
+
+    try {
+        const response = await fetch(`${url}?key=${apiKey}`, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const storedData = await response.json();
+        // Full answer format in json
+        console.log("Stored Data:", JSON.stringify(storedData, null, 2));
+        if (storedData.candidates && storedData.candidates[0].content.parts[0].text) {
+            // onlyl answer indexed
+            return storedData.candidates[0].content.parts[0].text;
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        return error;
+    }
+}
+
+
+
 
 // =============================================================================
 
@@ -95,3 +149,4 @@ function toggleFill(currentButton) {
         currentButtonSvg.innerHTML = BOOKMARK_OUTLINE_ICON;
     }
 }
+

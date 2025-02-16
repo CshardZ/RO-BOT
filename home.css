@@ -297,7 +297,7 @@ nav ul li.active {
 
 #conversation-container {
     height: 100%;
-    width: 72%;
+    width: 73%;
     padding: 2em 1em 1em 1em;
     display: flex;
     flex-direction: column;
@@ -361,7 +361,7 @@ nav ul li.active {
 /* CODEFOR: Highlights Section */
 #highlights {
     height: 100%;
-    width: 28%;
+    width: 27%;
     padding: 1.5em;
     border-radius: 0 10px 10px 0;
     border-left: 1px solid #ffffff1a;
@@ -419,6 +419,20 @@ hr {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
     letter-spacing: 1px;
     font-size: large;
+
+    hr {
+        height: 1px;
+        width: 100%;
+        margin: 1em 0;
+    }
+
+    h2 {
+        margin-top: 1em;
+    }
+
+    /* h3 {
+        display: inline-block;
+    } */
 }
 
 /* ======================================================== */

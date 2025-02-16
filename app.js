@@ -68,16 +68,19 @@ async function askGeminiAI() {
 // =============================================================================
 
 function formatTextToHTML(text) {
+    // Remove escape characters and extra whitespace
+    text = text.replace(/\s+/g, ' ').trim();
+  
     // Convert the first sentence into an <h1> tag
-    text = text.replace(/^(.*?\.)/, '<h1>$1</h1>');
+    text = text.replace(/^(.*?\.)/, '<h1>$1</h1><hr>');
   
     // Convert * **text:** to <h3>
-    text = text.replace(/\* \*\*(.*?)\:\*\*/g, '<h3>$1</h3>');
+    text = text.replace(/(?:\*\s*){3,}([^*]+?):\s*\*{2}/g, '<h3>$1:</h3>');
     // Convert **text:** to <h2>
-    text = text.replace(/\*\*(.*?)\:\*\*/g, '<h2>$1</h2>');
+    text = text.replace(/\*\*(.*?):\*\*/g, '<h2>$1</h2>');
   
     return text;
-  }
+}
 
 const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 const apiKey = "AIzaSyBKKWU5QbwKLt9dYm_v8ArWRaz8WfbfiI4"; // Replace with your actual API key

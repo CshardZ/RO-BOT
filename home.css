@@ -97,7 +97,7 @@ main {
 
     100% {
         position: absolute;
-        top: 4.5em;
+        top: 4em;
         left: 8em;
         opacity: 1;  
         transform: rotate(180deg);
@@ -158,6 +158,10 @@ nav ul li:first-child {
 
 #toggle-button svg:hover {
     fill: #ffffff;
+}
+
+#toggle-button.light-mode {
+    background-color: #343434;
 }
 
 nav ul li svg {
@@ -294,6 +298,41 @@ nav ul li.active {
     align-items: center;
     box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.4);
 }
+
+#chatbox.light-mode {
+    background-color: #cfcfcf;
+
+    #toolbar {
+        border-bottom: 1px solid #0000006a;
+    }
+
+    #share-button {
+        color: #fff;
+        background-color: #212121;
+    }
+
+    svg {
+        width: 20px;
+        fill: #000000;
+    }
+
+    #bookmark-button:hover, #delete-button:hover {
+        background-color: #f1f1f1;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+    }
+
+    #input-container {
+        background-color: #1a1a1a;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+
+        svg {
+            width: 25px;
+        }
+    }
+    
+}
+
 
 #conversation-container {
     height: 100%;

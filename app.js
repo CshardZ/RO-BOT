@@ -14,91 +14,97 @@ function setActivePage(clickedElement) {
     console.log("UPO");
     let allActiveItems = document.querySelectorAll("ul li");
     allActiveItems.forEach(li => li.classList.remove('active'));
-
+    
     clickedElement.parentElement.classList.add("active")
 }
 
 // =============================================================================
-
+// DOM Elements
 let answer;
 let userInputText;
 let textArea = document.getElementById('text-area');
 
-textArea.addEventListener('keydown', function(event) {
-    if(event.key === "Enter" && !event.shiftKey) {
+// Event Listeners
+textArea.addEventListener('keydown', handleUserInput);
+
+// Event Handler for User Input
+function handleUserInput(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         answer = askGeminiAI();
     }
-})
+}
 
+// Main Function to Handle AI Interaction
 async function askGeminiAI() {
     userInputText = textArea.value;
     textArea.value = "";
     if (userInputText.trim()) {
-        
-        let messageBlock = document.createElement('div');
-        messageBlock.classList.add('message-block');
-        
-        let userInput = document.createElement('p');
-        userInput.id = 'user-input';
-        userInput.textContent = userInputText;
-        messageBlock.appendChild(userInput);
-        console.log("NOW")
-
+        displayUserMessage(userInputText);
         let result = await fetchAnswerFromGemeni(userInputText);
-        let formattedText = formatTextToHTML(result);
-
-        let botOutputText = formattedText;
-        let botOutput = document.createElement('p');
-
-        botOutput.id = 'bot-output';
-        botOutput.innerHTML = botOutputText;
-
-        let hr = document.createElement('hr');
-        messageBlock.appendChild(hr);
-
-        messageBlock.appendChild(botOutput);
-
-        let allMessages = document.getElementById('all-messages');
-        allMessages.appendChild(messageBlock);
-
+        displayBotMessage(result);
     }
 }
 
-// =============================================================================
+// Display User Message
+function displayUserMessage(text) {
+    let messageBlock = createMessageBlock();
+    let userInput = createMessageElement('p', 'user-input', text);
+    messageBlock.appendChild(userInput);
+    let allMessages = document.getElementById('all-messages');
+    allMessages.appendChild(messageBlock);
+}
 
+// Display Bot Response
+function displayBotMessage(response) {
+    let messageBlock = document.querySelector('.message-block:last-child');
+    let formattedText = formatTextToHTML(response);
+    let botOutput = createMessageElement('p', 'bot-output', formattedText, true);
+    let hr = document.createElement('hr');
+    messageBlock.appendChild(hr);
+    messageBlock.appendChild(botOutput);
+    let allMessages = document.getElementById('all-messages');
+    allMessages.scrollTo({
+        top: allMessages.scrollHeight,
+        behavior: "smooth",
+    });
+}
+
+// Utility Functions to Create Elements
+function createMessageBlock() {
+    let messageBlock = document.createElement('div');
+    messageBlock.classList.add('message-block');
+    return messageBlock;
+}
+
+function createMessageElement(tag, id, text, isHTML = false) {
+    let element = document.createElement(tag);
+    element.id = id;
+    if (isHTML) {
+        element.innerHTML = text;
+    } else {
+        element.textContent = text;
+    }
+    return element;
+}
+
+// Text Formatting Function
 function formatTextToHTML(text) {
-    // Remove escape characters and extra whitespace
     text = text.replace(/\s+/g, ' ').trim();
-  
-    // Convert the first sentence into an <h1> tag
     text = text.replace(/^(.*?\.)/, '<h1>$1</h1><hr>');
-  
-    // Convert * **text:** to <h3>
     text = text.replace(/(?:\*\s*){3,}([^*]+?):\s*\*{2}/g, '<h3>$1:</h3>');
-    // Convert **text:** to <h2>
     text = text.replace(/\*\*(.*?):\*\*/g, '<h2>$1</h2>');
-  
     return text;
 }
 
+// API Configuration
 const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
-const apiKey = "AIzaSyBKKWU5QbwKLt9dYm_v8ArWRaz8WfbfiI4"; // Replace with your actual API key
+const apiKey = "AIzaSyBKKWU5QbwKLt9dYm_v8ArWRaz8WfbfiI4";
+const headers = { "Content-Type": "application/json" };
 
-const headers = {
-    "Content-Type": "application/json"
-};
-
+// Fetch AI Response
 async function fetchAnswerFromGemeni(query) {
-    let data = {
-        contents: [
-            {
-                parts: [
-                    { text: query }
-                ]
-            }
-        ]
-    };
+    let data = { contents: [{ parts: [{ text: query }] }] };
 
     try {
         const response = await fetch(`${url}?key=${apiKey}`, {
@@ -106,16 +112,15 @@ async function fetchAnswerFromGemeni(query) {
             headers: headers,
             body: JSON.stringify(data)
         });
-        
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const storedData = await response.json();
-        // Full answer format in json
         console.log("Stored Data:", JSON.stringify(storedData, null, 2));
+        
         if (storedData.candidates && storedData.candidates[0].content.parts[0].text) {
-            // onlyl answer indexed
             return storedData.candidates[0].content.parts[0].text;
         }
     } catch (error) {
@@ -123,11 +128,9 @@ async function fetchAnswerFromGemeni(query) {
         return error;
     }
 }
+
+
   
-  
-
-
-
 
 // =============================================================================
 
@@ -135,6 +138,8 @@ function toggleTheme(currentButton) {
     let activeButton = currentButton.parentElement.querySelector('.active-theme');
     let activeButtonSvg;
     let currentButtonSvg;
+    let chatbox = document.getElementById('chatbox');
+    let toggleButton = document.getElementById('toggle-button');
 
     console.log("current: ", currentButton.innerText);
     console.log("active: ", activeButton.innerText);
@@ -154,9 +159,13 @@ function toggleTheme(currentButton) {
     if(currentButton.innerText.includes("Light")) {
         currentButtonSvg.innerHTML = SUN_FILLED_ICON;
         activeButtonSvg.innerHTML = MOON_OUTLINE_ICON;
+        chatbox.classList.add('light-mode');
+        toggleButton.classList.add('light-mode');
     } else {
         currentButtonSvg.innerHTML = MOON_FILLED_ICON;
         activeButtonSvg.innerHTML = SUN_OUTLINE_ICON;
+        chatbox.classList.remove('light-mode');
+        toggleButton.classList.remove('light-mode');
     }
 
 }

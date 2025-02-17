@@ -9,7 +9,7 @@
     <script type="text/javascript" src="app.js" defer></script>
 </head>
 <body>
-    <main>
+    <main class>
         <div id="sidebar">
             <nav>
                 <ul>
@@ -65,21 +65,34 @@
         <div id="chatbox">
             <div id="conversation-container">
                 <div id="all-messages">
-                    <div class="message-block">
+                    <!-- <div class="message-block">
                         <p id="user-input">Where is earth in our universe?</p>
                         <hr>
                         <p id="bot-output">Inside a small point galaxy called Milky Way!</p>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="input-container">
                     <textarea id="text-area" placeholder="Message RO-BOT" rows="4"></textarea>
-                    <button onclick="sendUserInput()">
+                    <button onclick="processUserQuery()">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path></svg>     
                     </button>
                 </div>
             </div>
-            <div id="highlights">
 
+            <div id="highlights">
+                <div id="toolbar">
+                    <button id="share-button">
+                        Share
+                    </button>
+                    <div>
+                        <button id="bookmark-button" onclick="toggleFill(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff"><path d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4194 19.7761 22.6434 19.5 22.6434C19.4061 22.6434 19.314 22.6168 19.2344 22.5669L12 18.0313L4.76559 22.5669C4.53163 22.7136 4.22306 22.6429 4.07637 22.4089C4.02647 22.3293 4 22.2373 4 22.1433V3C4 2.44772 4.44772 2 5 2ZM18 4H6V19.4324L12 15.6707L18 19.4324V4Z"></path></svg>
+                        </button>
+                        <button id="delete-button" onclick="confirm('Delete chat? ')">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

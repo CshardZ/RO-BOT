@@ -99,7 +99,7 @@ function formatTextToHTML(text) {
 
 // API Configuration
 const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
-const apiKey = "AIzaSyBKKWU5QbwKLt9dYm_v8ArWRaz8WfbfiI4";
+const apiKey = "YOUR_GEMENI_API_KEY";
 const headers = { "Content-Type": "application/json" };
 
 // Fetch AI Response
